@@ -89,35 +89,85 @@ function initProjectHover() {
 }
 
 // ============================================
-// MOBILE: TAP TO VIEW PROJECT IMAGE
+// PROJECT GALLERY DATA
 // ============================================
-function initPortfolioMobile() {
-  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  if (!isTouchDevice || window.innerWidth > 768) return;
+const galleryImages = {
+  'purpose': ['42.png', '56.png', '64.png', '77.png', '83.png', '87.png', 'dia-do-consumidor.png'],
+  'halo-beauty': ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png', '11.png', '12.png', '13.png', '14.png'],
+  'acervo-moda': ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png', '11.png'],
+  'cym': ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '8.png', '9.png', '10.png'],
+  'cy': ['38.png', '39.png', '53.png', '58.png', '82.png', '100.png', '104.png', '111.png'],
+  'himawari': ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png'],
+  'lu-godoy': ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png', '11.png', '12.png'],
+};
 
-  const items = document.querySelectorAll('.project-item');
-  items.forEach((item) => {
+// ============================================
+// PROJECT GALLERY (click to open)
+// ============================================
+function initProjectGallery() {
+  const projectItems = document.querySelectorAll('.project-item');
+  const centerImages = document.querySelectorAll('.portfolio-image');
+  const gridCards = document.querySelectorAll('.portfolio-grid-card');
+
+  function openGallery(slug, projectName) {
+    const images = galleryImages[slug];
+    if (!images || !images.length) return;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'gallery-overlay';
+    overlay.innerHTML = `
+      <div class="gallery-header">
+        <span class="gallery-title">${projectName}</span>
+        <button class="gallery-close">&times;</button>
+      </div>
+      <div class="gallery-grid">
+        ${images.map((img) => `<img src="/images/portfolio/${slug}/${img}" alt="${projectName}" loading="lazy" />`).join('')}
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    lenis.stop();
+
+    requestAnimationFrame(() => overlay.classList.add('active'));
+
+    overlay.querySelector('.gallery-close').addEventListener('click', closeGallery);
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeGallery();
+    });
+
+    function closeGallery() {
+      overlay.classList.remove('active');
+      lenis.start();
+      setTimeout(() => overlay.remove(), 300);
+    }
+  }
+
+  // Click on project item name
+  projectItems.forEach((item) => {
     item.addEventListener('click', () => {
       const slug = item.dataset.slug;
-      const img = document.querySelector(`.portfolio-image[src*="${slug}"]`);
-      if (!img) return;
+      const name = item.querySelector('.project-name')?.textContent || slug;
+      openGallery(slug, name);
+    });
+  });
 
-      const overlay = document.createElement('div');
-      overlay.className = 'mobile-project-overlay';
-      overlay.innerHTML = `
-        <div class="overlay-close">&times;</div>
-        <img src="${img.src}" alt="${img.alt}" />
-      `;
-      document.body.appendChild(overlay);
+  // Click on center image
+  centerImages.forEach((img) => {
+    img.style.cursor = 'pointer';
+    img.addEventListener('click', () => {
+      const src = img.getAttribute('src') || '';
+      const slug = Object.keys(galleryImages).find((s) => src.includes(s));
+      if (slug) openGallery(slug, slug);
+    });
+  });
 
-      lenis.stop();
-      requestAnimationFrame(() => overlay.classList.add('active'));
-
-      overlay.addEventListener('click', () => {
-        overlay.classList.remove('active');
-        lenis.start();
-        setTimeout(() => overlay.remove(), 300);
-      });
+  // Click on grid card
+  gridCards.forEach((card) => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => {
+      const imgSrc = card.querySelector('img')?.getAttribute('src') || '';
+      const name = card.querySelector('.card-name')?.textContent || '';
+      const slug = Object.keys(galleryImages).find((s) => imgSrc.includes(s));
+      if (slug) openGallery(slug, name);
     });
   });
 }
@@ -190,7 +240,7 @@ function prefersReducedMotion() {
 document.addEventListener('DOMContentLoaded', () => {
   initHamburger();
   initProjectHover();
-  initPortfolioMobile();
+  initProjectGallery();
   initViewToggle();
 
   if (!prefersReducedMotion()) {
