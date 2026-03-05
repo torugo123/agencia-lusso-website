@@ -92,13 +92,13 @@ function initProjectHover() {
 // PROJECT GALLERY DATA
 // ============================================
 const galleryImages = {
-  'purpose': ['42.png', '56.png', '64.png', '77.png', '83.png', '87.png', 'dia-do-consumidor.png'],
-  'halo-beauty': ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png', '11.png', '12.png', '13.png', '14.png'],
-  'acervo-moda': ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png', '11.png'],
-  'cym': ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '8.png', '9.png', '10.png'],
-  'cy': ['38.png', '39.png', '53.png', '58.png', '82.png', '100.png', '104.png', '111.png'],
-  'himawari': ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png'],
-  'lu-godoy': ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png', '11.png', '12.png'],
+  'purpose': ['42.webp', '56.webp', '64.webp', '77.webp', '83.webp', '87.webp', 'dia-do-consumidor.webp'],
+  'halo-beauty': ['1.webp', '2.webp', '3.webp', '4.webp', '5.webp', '6.webp', '7.webp', '8.webp', '9.webp', '10.webp', '11.webp', '12.webp', '13.webp', '14.webp'],
+  'acervo-moda': ['1.webp', '2.webp', '3.webp', '4.webp', '5.webp', '6.webp', '7.webp', '8.webp', '9.webp', '10.webp', '11.webp'],
+  'cym': ['1.webp', '2.webp', '3.webp', '4.webp', '5.webp', '6.webp', '8.webp', '9.webp', '10.webp'],
+  'cy': ['38.webp', '39.webp', '53.webp', '58.webp', '82.webp', '100.webp', '104.webp', '111.webp'],
+  'himawari': ['1.webp', '2.webp', '3.webp', '4.webp', '5.webp', '6.webp', '7.webp', '8.webp', '9.webp'],
+  'lu-godoy': ['1.webp', '2.webp', '3.webp', '4.webp', '5.webp', '6.webp', '7.webp', '8.webp', '9.webp', '10.webp', '11.webp', '12.webp'],
 };
 
 // ============================================

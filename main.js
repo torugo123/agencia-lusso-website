@@ -372,16 +372,11 @@ function initSolutionCards() {
   const cardsContainer = document.querySelector('.solutions-cards');
   if (!cardsContainer) return;
 
-  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  const isMobile = window.innerWidth < 768;
 
-  if (isTouchDevice) {
-    // Tap-to-expand on mobile
-    solutionCards.forEach((card) => {
-      card.addEventListener('click', () => {
-        solutionCards.forEach((c) => c.classList.remove('active'));
-        card.classList.add('active');
-      });
-    });
+  if (isMobile) {
+    // Static on mobile — no expand
+    return;
   } else {
     // Hover on desktop
     solutionCards.forEach((card) => {
