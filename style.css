@@ -3,9 +3,12 @@
    ============================================ */
 
 /* --- Font: Helvetica (self-hosted) --- */
+/* Note: helvetica-light.ttf has a malformed cmap table that Chrome/Safari reject.
+   Mapping weight 300 to the Regular file as a workaround — display text will be
+   slightly heavier than the original 200/300 design but consistently Helvetica. */
 @font-face {
   font-family: 'Helvetica';
-  src: url('/fonts/helvetica-light.ttf') format('truetype');
+  src: url('/fonts/Helvetica.ttf') format('truetype');
   font-weight: 300; font-style: normal; font-display: swap;
 }
 @font-face {
