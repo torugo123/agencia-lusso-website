@@ -786,21 +786,32 @@ section {
   font-weight: 300;
   color: var(--color-white-soft);
   margin-bottom: 24px;
+  position: relative;
+  z-index: 2;
 }
 
 .cta-dark h2 {
   color: var(--color-white-soft);
-  max-width: 900px;
+  max-width: 780px;
   margin-bottom: 48px;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-dark .btn {
+  position: relative;
+  z-index: 2;
 }
 
 .cta-dark-image {
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 400px;
-  opacity: 0.45;
+  width: 320px;
+  opacity: 0.35;
   filter: grayscale(100%);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .cta-dark-image img {
