@@ -2,24 +2,39 @@
    AGÊNCIA LUSSO — Global Styles
    ============================================ */
 
-/* --- Font: General Sans via CDN --- */
-@import url('https://fonts.cdnfonts.com/css/general-sans');
+/* --- Font: Helvetica (self-hosted) --- */
+@font-face {
+  font-family: 'Helvetica';
+  src: url('/fonts/helvetica-light.ttf') format('truetype');
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Helvetica';
+  src: url('/fonts/Helvetica.ttf') format('truetype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Helvetica';
+  src: url('/fonts/Helvetica-Bold.ttf') format('truetype');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
 
 /* --- CSS Custom Properties --- */
 :root {
   /* Colors */
-  --color-bg:           #FFFDF5;
-  --color-text:         #1D1D1B;
-  --color-text-muted:   #707767;
-  --color-dark:         #510301;
-  --color-beige:        #DFDAC6;
-  --color-cream:        #F7F4E9;
-  --color-white-soft:   #FEFEFE;
-  --color-btn-bg:       #1D1D1B;
-  --color-btn-text:     #FFFDF5;
+  --color-bg:             #e5e3d6;
+  --color-text:           #31312f;
+  --color-text-muted:     #707767;
+  --color-dark:           #510301;
+  --color-beige:          #DFDAC6;
+  --color-cream:          #F7F4E9;
+  --color-white-soft:     #FEFEFE;
+  --color-btn-bg:         #31312f;
+  --color-btn-text:       #e5e3d6;
+  --color-accent-green:   #e0f0d1;
 
   /* Typography */
-  --font-primary:       'General Sans', sans-serif;
+  --font-primary:       'Helvetica', 'Helvetica Neue', Arial, sans-serif;
   --font-size-h1:       98px;
   --font-size-h2:       71px;
   --font-size-h3:       36px;
@@ -110,7 +125,7 @@ ul, ol {
 /* --- Typography --- */
 h1, .h1 {
   font-size: var(--font-size-h1);
-  font-weight: 200;
+  font-weight: 300;
   line-height: 1.15;
   letter-spacing: normal;
   color: var(--color-text);
@@ -269,10 +284,10 @@ section {
 }
 
 .loader-logo {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Helvetica', 'Helvetica Neue', Arial, sans-serif;
   color: var(--color-white-soft);
   font-size: 64px;
-  font-weight: 300;
+  font-weight: 700;
   letter-spacing: 16px;
   text-transform: uppercase;
   opacity: 0;
@@ -313,9 +328,9 @@ section {
 }
 
 .header-logo {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Helvetica', 'Helvetica Neue', Arial, sans-serif;
   font-size: 24px;
-  font-weight: 400;
+  font-weight: 700;
   letter-spacing: 6px;
   text-transform: uppercase;
   color: var(--color-text);
@@ -421,7 +436,7 @@ section {
 
 .mobile-menu a {
   font-size: 36px;
-  font-weight: 200;
+  font-weight: 300;
   color: var(--color-text);
 }
 
@@ -1696,9 +1711,9 @@ section {
 }
 
 .portfolio-header .logo {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Helvetica', 'Helvetica Neue', Arial, sans-serif;
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 5px;
   color: #fff;
