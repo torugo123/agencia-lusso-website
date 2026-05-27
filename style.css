@@ -842,31 +842,10 @@ section {
 }
 
 /* ============================================
-   FAQ
+   FAQ — shared icon pseudo-elements only
+   (.faq-item / .faq-question / .faq-answer layout
+    is scoped under .contact-faq in CONTACT PAGE section)
    ============================================ */
-.faq-item {
-  border-bottom: 1px solid rgba(29, 29, 27, 0.2);
-}
-
-.faq-question {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 0;
-  font-size: 18px;
-  font-weight: 400;
-  color: var(--color-text);
-  text-align: left;
-}
-
-.faq-icon {
-  width: 24px;
-  height: 24px;
-  position: relative;
-  flex-shrink: 0;
-}
-
 .faq-icon::before,
 .faq-icon::after {
   content: '';
@@ -893,22 +872,6 @@ section {
 
 .faq-item.active .faq-icon::after {
   transform: translate(-50%, -50%) rotate(90deg);
-}
-
-.faq-answer {
-  height: 0;
-  overflow: hidden;
-}
-
-.faq-answer-inner {
-  padding: 0 0 18px;
-}
-
-.faq-answer-inner p {
-  font-size: 16px;
-  font-weight: 300;
-  color: var(--color-text-muted);
-  line-height: 1.6;
 }
 
 /* ============================================
