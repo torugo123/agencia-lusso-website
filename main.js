@@ -227,22 +227,6 @@ function initScrollAnimations() {
     });
   }
 
-  // Solutions section reveal
-  const solutionsSection = document.querySelector('.solutions-cards');
-  if (solutionsSection) {
-    gsap.from(solutionsSection, {
-      opacity: 0,
-      y: 40,
-      duration: 0.8,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '.solutions',
-        start: 'top 85%',
-        once: true,
-      },
-    });
-  }
-
   // Info rows stagger
   const infoRows = document.querySelectorAll('.info-row');
   if (infoRows.length) {
@@ -254,23 +238,6 @@ function initScrollAnimations() {
       ease: 'power2.out',
       scrollTrigger: {
         trigger: '.info-rows-section',
-        start: 'top 85%',
-        once: true,
-      },
-    });
-  }
-
-  // Differentiator badges stagger
-  const badges = document.querySelectorAll('.diff-badge');
-  if (badges.length) {
-    gsap.to(badges, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '.differentiators-grid',
         start: 'top 85%',
         once: true,
       },
@@ -305,89 +272,6 @@ function initScrollAnimations() {
         end: 'bottom top',
         scrub: true,
       },
-    });
-  }
-}
-
-// ============================================
-// FAQ ACCORDION
-// ============================================
-function initFAQ() {
-  const faqItems = document.querySelectorAll('[data-faq]');
-
-  faqItems.forEach((item) => {
-    const trigger = item.querySelector('[data-faq-trigger]');
-    const content = item.querySelector('[data-faq-content]');
-    const inner = content?.querySelector('.faq-answer-inner');
-
-    if (!trigger || !content || !inner) return;
-
-    trigger.addEventListener('click', () => {
-      const isActive = item.classList.contains('active');
-
-      // Close all others
-      faqItems.forEach((other) => {
-        if (other !== item && other.classList.contains('active')) {
-          other.classList.remove('active');
-          const otherTrigger = other.querySelector('[data-faq-trigger]');
-          const otherContent = other.querySelector('[data-faq-content]');
-          otherTrigger?.setAttribute('aria-expanded', 'false');
-          gsap.to(otherContent, {
-            height: 0,
-            duration: 0.4,
-            ease: 'power2.inOut',
-          });
-        }
-      });
-
-      if (isActive) {
-        // Close current
-        item.classList.remove('active');
-        trigger.setAttribute('aria-expanded', 'false');
-        gsap.to(content, {
-          height: 0,
-          duration: 0.4,
-          ease: 'power2.inOut',
-        });
-      } else {
-        // Open current
-        item.classList.add('active');
-        trigger.setAttribute('aria-expanded', 'true');
-        const targetHeight = inner.offsetHeight;
-        gsap.to(content, {
-          height: targetHeight,
-          duration: 0.4,
-          ease: 'power2.inOut',
-        });
-      }
-    });
-  });
-}
-
-// ============================================
-// SOLUTION CARDS — Expand on hover
-// ============================================
-function initSolutionCards() {
-  const solutionCards = document.querySelectorAll('.solution-card');
-  const cardsContainer = document.querySelector('.solutions-cards');
-  if (!cardsContainer) return;
-
-  const isMobile = window.innerWidth < 768;
-
-  if (isMobile) {
-    // Static on mobile — no expand
-    return;
-  } else {
-    // Hover on desktop
-    solutionCards.forEach((card) => {
-      card.addEventListener('mouseenter', () => {
-        solutionCards.forEach((c) => c.classList.remove('active'));
-        card.classList.add('active');
-      });
-    });
-
-    cardsContainer.addEventListener('mouseleave', () => {
-      solutionCards.forEach((c) => c.classList.remove('active'));
     });
   }
 }
@@ -442,8 +326,6 @@ function prefersReducedMotion() {
 document.addEventListener('DOMContentLoaded', () => {
   initHeader();
   initHamburger();
-  initFAQ();
-  initSolutionCards();
   initMarqueeSpeed();
   initScrollToTop();
   initSmoothAnchors();
