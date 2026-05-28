@@ -191,88 +191,49 @@ function initSplitText() {
 // SCROLL-TRIGGERED ANIMATIONS
 // ============================================
 function initScrollAnimations() {
-  // Split text
+  // Split text (headings) — line-by-line reveal, each heading on its own entry
   initSplitText();
 
-  // Reveal elements
-  const reveals = document.querySelectorAll('.reveal');
-  reveals.forEach((el) => {
-    gsap.to(el, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 85%',
-        once: true,
-      },
-    });
+  // Unified reveal: ONE mechanism for every .reveal element. ScrollTrigger.batch
+  // groups elements that enter together and staggers them, each triggered by ITS
+  // OWN entry into the viewport. Fixes the previous double-binding (a generic
+  // per-element tween PLUS a parent-container stagger animating the same elements)
+  // and the early-reveal "pop" (parent stagger revealed off-screen children when
+  // the section top appeared).
+  ScrollTrigger.batch('.reveal', {
+    start: 'top 85%',
+    once: true,
+    onEnter: (batch) =>
+      gsap.to(batch, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.12,
+        ease: 'power2.out',
+        overwrite: 'auto',
+      }),
   });
 
-  // Hero cards stagger
-  const heroCards = document.querySelectorAll('.hero-card');
-  if (heroCards.length) {
-    gsap.to(heroCards, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '.hero-cards',
-        start: 'top 85%',
-        once: true,
-      },
-    });
-  }
-
-  // Info rows stagger
-  const infoRows = document.querySelectorAll('.info-row');
-  if (infoRows.length) {
-    gsap.to(infoRows, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '.info-rows-section',
-        start: 'top 85%',
-        once: true,
-      },
-    });
-  }
-
-  // Pre-footer cards stagger
-  const preFooterCards = document.querySelectorAll('.pre-footer-card');
-  if (preFooterCards.length) {
-    gsap.to(preFooterCards, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '.pre-footer-cards',
-        start: 'top 85%',
-        once: true,
-      },
-    });
-  }
-
-  // Hero image parallax
+  // Hero image parallax — scrub:1 (1s smoothed catch-up) feels smooth against
+  // Lenis; scrub:true (instant follow) micro-stutters.
   const heroImage = document.querySelector('.hero-image');
   if (heroImage) {
     gsap.to(heroImage, {
       y: '-15%',
+      ease: 'none',
       scrollTrigger: {
         trigger: '.hero',
         start: 'top top',
         end: 'bottom top',
-        scrub: true,
+        scrub: 1,
       },
     });
+  }
+
+  // Self-hosted Helvetica loads async; on cold loads the text reflows AFTER
+  // triggers are measured, leaving stale positions. Re-measure once fonts settle.
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => ScrollTrigger.refresh());
   }
 }
 
