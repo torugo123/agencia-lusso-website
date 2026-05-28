@@ -2,6 +2,11 @@ import { initChrome } from './chrome.js';
 import { initReveals } from './reveal.js';
 import { initAccordion } from './accordion.js';
 
+const LABELS = {
+  'tipo-servico': 'serviço', nome: 'nome', sobrenome: 'sobrenome',
+  email: 'email', telefone: 'telefone', mensagem: 'mensagem',
+};
+
 function start() {
   initChrome();
   enhanceForm();
@@ -9,13 +14,6 @@ function start() {
   if (faq) initAccordion(faq, { item: '.faq-item', trigger: '.faq-question', panel: '.faq-answer' });
   initReveals('.reveal');
 }
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
-else start();
-
-const LABELS = {
-  'tipo-servico': 'serviço', nome: 'nome', sobrenome: 'sobrenome',
-  email: 'email', telefone: 'telefone', mensagem: 'mensagem',
-};
 
 function enhanceForm() {
   const form = document.querySelector('.contact-form');
@@ -61,3 +59,6 @@ function validate(form) {
   });
   return ok;
 }
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+else start();
