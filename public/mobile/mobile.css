@@ -228,4 +228,33 @@ h1{ font-size:40px } h2{ font-size:30px } h3{ font-size:20px } h4{ font-size:24p
 .m-gallery-title{ font-size:18px } .m-gallery-cat{ font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.1em }
 .m-gallery-close{ width:44px; height:44px; display:flex; align-items:center; justify-content:center; font-size:28px; color:var(--text) }
 .m-gallery-grid{ display:flex; flex-direction:column; gap:10px; padding:10px var(--pad) 40px }
+
+/* ==================== CONTATO ==================== */
+.contact-hero{ padding:calc(var(--hdr-h) + 40px) var(--pad) 8px } .contact-hero h1{ font-size:40px }
+.contact-form-section,.contact-address,.contact-faq{ padding:40px 0 }
+.contact-form-section .s-inner,.contact-address .s-inner,.contact-faq .s-inner,.contact-cta .s-inner{ padding:0 var(--pad) }
+.contact-form-section h2,.contact-address h2,.contact-faq h2{ font-size:26px } .form-intro,.address-subtitle{ margin:10px 0 22px; color:var(--muted); font-size:15px }
+
+.contact-form{ display:flex; flex-direction:column; gap:16px }
+.contact-form .form-row{ display:flex; flex-direction:column; gap:16px } /* nome+sobrenome etc. stack with spacing */
+.m-field{ display:flex; flex-direction:column; gap:6px }
+.m-field label{ font-size:13px; letter-spacing:.04em; color:var(--text) }
+.contact-form input,.contact-form select,.contact-form textarea{
+  width:100%; font-family:inherit; font-size:16px; color:var(--text);
+  background:rgba(255,255,255,.5); border:1px solid rgba(49,49,47,.25); border-radius:8px; padding:14px 14px; min-height:48px }
+.contact-form textarea{ min-height:120px; resize:vertical }
+.m-field.m-invalid input,.m-field.m-invalid select,.m-field.m-invalid textarea{ border-color:var(--wine) }
+.m-error{ font-size:12px; color:var(--wine); min-height:14px }
+.btn-submit{ min-height:52px; background:var(--wine); color:var(--bg); border-radius:8px; font-size:16px; margin-top:4px }
+.m-form-success{ background:var(--green); color:var(--text); border-radius:10px; padding:18px; font-size:15px; text-align:center }
+
+.address-blocks{ display:flex; flex-direction:column; gap:22px }
+.address-block h3{ font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted) }
+.address-block p{ margin-top:6px; font-size:17px } .address-block a{ color:var(--wine) }
+
+.contact-cta{ background:var(--wine); padding:56px 0 } .contact-cta h2{ color:var(--white-soft); font-size:30px }
+.contact-cta p{ color:rgba(254,254,254,.85) }
+.contact-cta-marquee{ margin-top:28px; overflow:hidden }
+.contact-cta-marquee .marquee-track{ display:inline-block; white-space:nowrap; animation:m-scroll 26s linear infinite }
+.contact-cta-marquee .marquee-item{ color:var(--white-soft); font-size:16px; margin:0 18px }
 .m-gallery-grid img{ width:100%; border-radius:8px }
