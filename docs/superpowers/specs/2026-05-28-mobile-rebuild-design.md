@@ -16,6 +16,7 @@
 - Replace GSAP + Lenis on mobile with Motion One + IntersectionObserver, native scroll.
 - Fix the mobile chrome (menu, header, footer, FAB) and accessibility gaps.
 - Keep desktop byte-for-byte unchanged in behavior.
+- Align the mobile look with the owner's reference (**itsdoestudio.com**): image-led, full-bleed media + a single big statement moment, no decorative tickers (see §5.0).
 
 **Non-goals (this round):**
 - No desktop redesign.
@@ -115,7 +116,17 @@ Generic, reused by Home services, Sobre story, Contato FAQ.
 
 ---
 
-## 5. Per-Page Design
+## 5. Visual Direction & Per-Page Design
+
+### 5.0 Visual direction (reference: itsdoestudio.com)
+Adopt the reference's *feel*, not a clone. Verified from the live mobile site: it uses full-bleed photo/video sections with small overlaid labels, an elegant script display face contrasted with clean sans-caps, one oversized bold statement as the centerpiece, smooth scroll reveals — and **zero marquees/tickers**.
+
+Applied to Lusso mobile:
+- **Image-led, full-bleed media sections.** Replace decorative filler (the cut marquees) with edge-to-edge image/short-video sections, each with a small overlaid label (uppercase category). Use the repo's currently-unused brand imagery on mobile — `about.webp`, `card-branding.webp`, `card-social.webp`, `card-producao.webp`, `extra-coffee.webp`, `extra-pen.webp`, `extra-portrait.webp`, `marquee-flatlay.webp`, plus portfolio shots (all large sources; resize for mobile).
+- **One big statement moment.** A single oversized, bold statement block as the typographic centerpiece. Promote `posicionamento não é detalhe. é estratégia.` (from the cut dark marquee) into that statement; `marcas de beleza…` is the second statement candidate.
+- **Motion = reveals + gentle parallax on media**, never scrolling word strips (Motion One `inView`).
+- **Restraint.** Generous spacing, few elements per screen, strong size/weight hierarchy.
+- **Typography (OPEN — see §12):** the reference pairs a script display face with sans-caps. Lusso's current identity is lowercase Helvetica only. A script/display face is a brand-level change — **not assumed here**; default keeps Helvetica with stronger size/weight contrast unless the owner opts into a display face.
 
 ### 5.1 Home (`mobile/home.js`)
 Section order (top→bottom):
@@ -123,15 +134,17 @@ Section order (top→bottom):
 2. **Hero:** h1 `delegar é crescer` + one tightened value line (see §7) + hero image moved up (not buried at the bottom) + 3 service chips (identidade visual e branding / social media / direção criativa) linking into the services accordion.
 3. **Services accordion:** the 6 services (titles visible, bodies on tap, single-open). Full body copy retained inside panels.
 4. **Why Lusso:** trimmed mission/about intro (see §7) + `nossa missão é:` line.
-5. **Positioning CTA (dark):** label `para quem é a agência lusso?` + h2 `marcas de beleza…` + `fale conosco →` button.
-6. **Pre-footer:** `quem delega cresce` + back-to-top button.
-7. Footer (chrome).
-- At most one slim brand marquee (CSS animation); the dark marquee is cut.
+5. **Full-bleed image section** (≥1) with a small overlaid label, using repo brand imagery — carries the image-led direction (§5.0).
+6. **Statement block:** `posicionamento não é detalhe. é estratégia.` as a large bold statement (promoted from the cut dark marquee).
+7. **Positioning CTA (dark):** label `para quem é a agência lusso?` + h2 `marcas de beleza…` + `fale conosco →` button.
+8. **Pre-footer:** `quem delega cresce` + back-to-top button.
+9. Footer (chrome).
+- **All marquees cut** (§5.0).
 
 ### 5.2 Sobre (`mobile/sobre.js`)
 1. Header.
 2. **Hero:** h1 `sobre a lusso`.
-3. **Founder portrait:** `extra-portrait.webp` (B&W; color `about.webp` available), resized to a mobile-appropriate size (~800px wide webp), placed near the top of the story.
+3. **Founder portrait:** `about.webp` (color — **chosen**; B&W `extra-portrait.webp` available as alternative), resized to a mobile-appropriate size (~800px wide webp), given a **full-bleed treatment** near the top of the story (§5.0).
 4. **Story accordion:** the 4 chapters `origem / fundadora / foco / filosofia` — labels visible, tap to read full paragraph. Single-open.
 5. **CTA:** `quer conversar?` + `fale conosco →` → `/contato.html`.
 6. Footer.
@@ -155,7 +168,7 @@ Section order (top→bottom):
    - **Submit:** `preventDefault()`; on valid input show a **success-state placeholder** message ("mensagem enviada…") — no data is transmitted. Structure leaves a single obvious hook for a future backend.
 4. **Address blocks:** single-column, prioritized (email `mailto:`, whatsapp `wa.me`, instagram, horário), ≥44px targets.
 5. **FAQ accordion:** the 5 Q&A items, rebuilt with proper ARIA (single-open).
-6. **CTA:** marquee kept slim or cut to match home.
+6. **CTA:** a large statement block (the existing CTA line); **marquee cut** (§5.0).
 7. Footer.
 
 ---
@@ -227,7 +240,7 @@ Playwright at **390×844**, plus a **360px** small-phone pass and a **768px** bo
 ---
 
 ## 11. File-Change Summary
-**New:** `public/favicon.svg`, `public/mobile/mobile.css`, `mobile/chrome.js`, `mobile/accordion.js`, `mobile/reveal.js`, `mobile/home.js`, `mobile/portfolio.js`, `mobile/sobre.js`, `mobile/contato.js`. Resized founder portrait asset for Sobre (derived from `extra-portrait.webp`).
+**New:** `public/favicon.svg`, `public/mobile/mobile.css`, `mobile/chrome.js`, `mobile/accordion.js`, `mobile/reveal.js`, `mobile/home.js`, `mobile/portfolio.js`, `mobile/sobre.js`, `mobile/contato.js`. Resized founder portrait asset for Sobre (derived from `about.webp`, color). Resized mobile copies of the selected brand images for the full-bleed sections (§5.0; shortlist confirmed in the plan).
 **Edited:** `index.html`, `portfolio.html`, `sobre.html`, `contato.html` (head link tags + entry script), `package.json` (add `motion`).
 **Possibly touched:** `vite.config.js` (only if dynamic-import wiring requires it; confirmed in plan).
 **Untouched (desktop behavior):** `style.css`, `main.js`, `portfolio.js`, `sobre.js`, `contato.js`, `portfolio-data.js`.
@@ -235,6 +248,8 @@ Playwright at **390×844**, plus a **360px** small-phone pass and a **768px** bo
 ---
 
 ## 12. Open Items for Reviewer
-1. Founder portrait: B&W (`extra-portrait.webp`, default) vs color (`about.webp`)?
-2. Copy changes in §7 — approve / edit / reject each.
-3. Keep one slim marquee on Home/Contato, or cut entirely?
+1. ~~Founder portrait: B&W vs color~~ — **RESOLVED: color (`about.webp`)**.
+2. ~~Copy changes in §7~~ — **RESOLVED: all 3 approved**.
+3. ~~Keep a slim marquee or cut?~~ — **RESOLVED: all marquees cut; replaced by full-bleed imagery + a big statement block (§5.0)**.
+4. **Typography (NEW, open):** keep lowercase Helvetica (default, stronger size/weight contrast) **or** introduce a script/display face for the Doe-style script-vs-caps contrast? Brand-level decision.
+5. **Full-bleed imagery selection (NEW, open):** which repo brand images to use for the new full-bleed sections (candidates listed in §5.0) — I can propose a shortlist with the plan.
