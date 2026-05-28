@@ -1,2 +1,5 @@
 import { initChrome } from './chrome.js';
-document.addEventListener('DOMContentLoaded', () => { initChrome(); });
+
+function start() { initChrome(); }
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+else start();
