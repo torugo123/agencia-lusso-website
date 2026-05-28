@@ -546,7 +546,17 @@ export function initAccordion(root, cfg) {
     panel.setAttribute('role', 'region');
     panel.setAttribute('aria-labelledby', btn.id);
     btn.innerHTML = `<span>${triggerEl.textContent.trim()}</span><span class="m-acc-sign" aria-hidden="true"></span>`;
-    triggerEl.replaceWith(btn);
+    // Preserve heading semantics: if the trigger was a heading, keep its level by
+    // wrapping the button in the same heading tag (button is valid inside a heading).
+    const tag = triggerEl.tagName;
+    if (/^H[1-6]$/.test(tag)) {
+      const heading = document.createElement(tag);
+      heading.className = 'm-acc-heading';
+      heading.appendChild(btn);
+      triggerEl.replaceWith(heading);
+    } else {
+      triggerEl.replaceWith(btn);
+    }
 
     // collapsed by default (JS-applied; CSS leaves panels open for no-JS)
     panel.style.height = '0px';
@@ -574,10 +584,10 @@ export function initAccordion(root, cfg) {
     e.open = false; e.btn.setAttribute('aria-expanded', 'false');
     const current = e.panel.offsetHeight;
     if (reduce) { e.panel.style.height = '0px'; return; }
+    // offsetHeight above already forced a style flush, so animate in the same frame
+    // (no rAF — a deferred callback could fire after a fast re-tap and fight the new animation).
     e.panel.style.height = current + 'px';
-    requestAnimationFrame(() => {
-      animate(e.panel, { height: [current + 'px', '0px'] }, { duration: 0.3, ease: [0.22, 0.61, 0.36, 1] });
-    });
+    animate(e.panel, { height: [current + 'px', '0px'] }, { duration: 0.3, ease: [0.22, 0.61, 0.36, 1] });
   }
 }
 ```
