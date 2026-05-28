@@ -16,13 +16,16 @@
 - Replace GSAP + Lenis on mobile with Motion One + IntersectionObserver, native scroll.
 - Fix the mobile chrome (menu, header, footer, FAB) and accessibility gaps.
 - Keep desktop byte-for-byte unchanged in behavior.
-- Align the mobile look with the owner's reference (**itsdoestudio.com**): image-led, full-bleed media + a single big statement moment, no decorative tickers (see §5.0).
+- Mirror the current desktop **content faithfully** on mobile (desktop already implements the owner's brief in `melhorias site.pdf`).
+- Align the mobile look with the owner's reference (**itsdoestudio.com**): image-led, full-bleed media + a big statement moment — **while keeping the brand marquee the owner explicitly wants** (see §5.0).
+- Typography: **Helvetica only** (weights may vary). Brand quirk: **all copy lowercase, no final period.**
 
-**Non-goals (this round):**
+**Non-goals (this round) — mobile-only:**
 - No desktop redesign.
 - No contact-form backend wiring (UI/validation/success placeholder only).
 - No portfolio gallery content refresh from the Documents zips (existing galleries stay).
 - Performance/battery is explicitly **not** a driving constraint (sessions are short).
+- **Out of scope (owner brief, deferred to separate work):** new logo asset, the faceless hero photo `C8CB43A3-…B1.jpg`, wiring Pinterest/Behance/TikTok to real URLs, a Blog page (Substack), and the links-aggregator page. Not built here.
 
 ---
 
@@ -119,14 +122,13 @@ Generic, reused by Home services, Sobre story, Contato FAQ.
 ## 5. Visual Direction & Per-Page Design
 
 ### 5.0 Visual direction (reference: itsdoestudio.com)
-Adopt the reference's *feel*, not a clone. Verified from the live mobile site: it uses full-bleed photo/video sections with small overlaid labels, an elegant script display face contrasted with clean sans-caps, one oversized bold statement as the centerpiece, smooth scroll reveals — and **zero marquees/tickers**.
-
-Applied to Lusso mobile:
-- **Image-led, full-bleed media sections.** Replace decorative filler (the cut marquees) with edge-to-edge image/short-video sections, each with a small overlaid label (uppercase category). Use the repo's currently-unused brand imagery on mobile — `about.webp`, `card-branding.webp`, `card-social.webp`, `card-producao.webp`, `extra-coffee.webp`, `extra-pen.webp`, `extra-portrait.webp`, `marquee-flatlay.webp`, plus portfolio shots (all large sources; resize for mobile).
-- **One big statement moment.** A single oversized, bold statement block as the typographic centerpiece. Promote `posicionamento não é detalhe. é estratégia.` (from the cut dark marquee) into that statement; `marcas de beleza…` is the second statement candidate.
-- **Motion = reveals + gentle parallax on media**, never scrolling word strips (Motion One `inView`).
+Adopt the reference's *feel*, not a clone, **while honoring the owner's specific likes from `melhorias site.pdf`** (notably: they love the marquee). Combine both:
+- **Keep the brand marquee.** The owner explicitly loves it. Carry it on mobile with the service words: `identidade visual · branding · direção criativa · social media · design · captação e edição de fotos e vídeos`. Implement as a CSS marquee (no edge word-clipping like the current one). This is *in addition to* the Doe-style elements below, not replaced by them.
+- **Image-led, full-bleed media sections.** Use edge-to-edge image sections with a small overlaid label where photos exist, drawing on the repo's currently-unused brand imagery — `about.webp`, `card-branding.webp`, `card-social.webp`, `card-producao.webp`, `extra-coffee.webp`, `extra-pen.webp`, `extra-portrait.webp`, `marquee-flatlay.webp`, plus portfolio shots (large sources; resize for mobile).
+- **A big statement moment.** Treat the existing dark CTA heading (`marcas de beleza, que querem profissionalizar…`) as the oversized bold typographic centerpiece, Doe-style. (No marquee is converted into it — the marquee stays.)
+- **Motion:** Motion One reveals (`inView`) + gentle parallax on media, plus the CSS marquee.
 - **Restraint.** Generous spacing, few elements per screen, strong size/weight hierarchy.
-- **Typography (OPEN — see §12):** the reference pairs a script display face with sans-caps. Lusso's current identity is lowercase Helvetica only. A script/display face is a brand-level change — **not assumed here**; default keeps Helvetica with stronger size/weight contrast unless the owner opts into a display face.
+- **Typography:** **Helvetica only** (weights may vary) — confirmed by owner; no script/display face. Hierarchy comes from size/weight. **All copy lowercase, no final period** (brand quirk, applied globally on mobile, mirroring desktop).
 
 ### 5.1 Home (`mobile/home.js`)
 Section order (top→bottom):
@@ -134,12 +136,12 @@ Section order (top→bottom):
 2. **Hero:** h1 `delegar é crescer` + one tightened value line (see §7) + hero image moved up (not buried at the bottom) + 3 service chips (identidade visual e branding / social media / direção criativa) linking into the services accordion.
 3. **Services accordion:** the 6 services (titles visible, bodies on tap, single-open). Full body copy retained inside panels.
 4. **Why Lusso:** trimmed mission/about intro (see §7) + `nossa missão é:` line.
-5. **Full-bleed image section** (≥1) with a small overlaid label, using repo brand imagery — carries the image-led direction (§5.0).
-6. **Statement block:** `posicionamento não é detalhe. é estratégia.` as a large bold statement (promoted from the cut dark marquee).
-7. **Positioning CTA (dark):** label `para quem é a agência lusso?` + h2 `marcas de beleza…` + `fale conosco →` button.
+5. **Marquee** (kept — owner's brief) with the service words (§5.0), as a clean CSS marquee.
+6. **Full-bleed image section** (≥1) with a small overlaid label, using repo brand imagery — image-led direction (§5.0).
+7. **Positioning CTA (dark):** label `para quem é a agência lusso?` + big statement h2 `marcas de beleza…` + `fale conosco →` button (the Doe-style statement moment).
 8. **Pre-footer:** `quem delega cresce` + back-to-top button.
 9. Footer (chrome).
-- **All marquees cut** (§5.0).
+- Marquee **kept** (§5.0); mirror desktop content faithfully; all copy lowercase / no final period.
 
 ### 5.2 Sobre (`mobile/sobre.js`)
 1. Header.
@@ -168,7 +170,7 @@ Section order (top→bottom):
    - **Submit:** `preventDefault()`; on valid input show a **success-state placeholder** message ("mensagem enviada…") — no data is transmitted. Structure leaves a single obvious hook for a future backend.
 4. **Address blocks:** single-column, prioritized (email `mailto:`, whatsapp `wa.me`, instagram, horário), ≥44px targets.
 5. **FAQ accordion:** the 5 Q&A items, rebuilt with proper ARIA (single-open).
-6. **CTA:** a large statement block (the existing CTA line); **marquee cut** (§5.0).
+6. **CTA:** the existing CTA line as a large statement; **marquee kept** with service words (§5.0).
 7. Footer.
 
 ---
@@ -180,31 +182,16 @@ Section order (top→bottom):
 
 ---
 
-## 7. Copy Changes (FOR APPROVAL)
+## 7. Copy Treatment
 
-These are proposals to reduce the redundant **always-visible** prose on Home (the three paragraphs that all repeat "we're strategic / not basic / business-minded"). Accordion body copy is **not** changed. Nothing here is final until approved.
+Per the owner's brief (`melhorias site.pdf`): **keep the full copy** — no trimming. Mobile mirrors the current desktop strings verbatim. (Earlier trim proposals are withdrawn.)
 
-**Hero body** — original (~45 words):
-> somos uma agência focada em negócios de beleza, moda e bem-estar. unimos estratégia, estética e resultado para impulsionar negócios que entendem que delegar é o caminho para evoluir
+Brand rules applied globally on mobile:
+- **All copy lowercase.**
+- **No final period** on copy lines (deliberate brand quirk).
+- **Helvetica only**, weights may vary.
 
-→ proposed (tighter):
-> agência de beleza, moda e bem-estar. unimos estratégia, estética e resultado — porque delegar é o caminho para crescer.
-
-**CTA band** — original:
-> nada aqui é básico. cada decisão é estratégica. cada detalhe comunica. trabalhamos com marcas que querem sair do óbvio, se diferenciar no mercado e construir uma voz coerente, atrativa e sustentável
-
-→ proposed (drop the trailing sentence that repeats the hero):
-> nada aqui é básico. cada decisão é estratégica, cada detalhe comunica.
-
-**About/mission intro** — original (~75 words):
-> nosso olhar é construído diariamente pelas referências que consumimos, pelas pessoas com quem trabalhamos e pelas experiências que acumulamos ao longo desses 5 anos de agência. mais do que estética, ele é guiado por uma visão de negócio, fazendo com que cada entrega seja pensada de forma macro, buscando soluções que realmente façam sentido para o crescimento dos nossos clientes
-
-→ proposed (tighter, 2 sentences):
-> nosso olhar é construído por 5 anos de referências, pessoas e experiências. mais do que estética, ele é guiado por visão de negócio — cada entrega pensada para o crescimento dos nossos clientes.
-
-**Mission line** (`posicionar marcas de pessoas incríveis…`) — **unchanged** (short and unique).
-
-All other strings across all pages are preserved verbatim.
+Accordions keep the dense service/FAQ bodies out of the way, so full copy does not create "walls" — the text-heaviness is solved by progressive disclosure, not by cutting words.
 
 ---
 
@@ -249,7 +236,8 @@ Playwright at **390×844**, plus a **360px** small-phone pass and a **768px** bo
 
 ## 12. Open Items for Reviewer
 1. ~~Founder portrait: B&W vs color~~ — **RESOLVED: color (`about.webp`)**.
-2. ~~Copy changes in §7~~ — **RESOLVED: all 3 approved**.
-3. ~~Keep a slim marquee or cut?~~ — **RESOLVED: all marquees cut; replaced by full-bleed imagery + a big statement block (§5.0)**.
-4. **Typography (NEW, open):** keep lowercase Helvetica (default, stronger size/weight contrast) **or** introduce a script/display face for the Doe-style script-vs-caps contrast? Brand-level decision.
-5. **Full-bleed imagery selection (NEW, open):** which repo brand images to use for the new full-bleed sections (candidates listed in §5.0) — I can propose a shortlist with the plan.
+2. ~~Copy trims~~ — **RESOLVED: withdrawn; keep full owner copy + lowercase / no-final-period rule (§7)**.
+3. ~~Keep a marquee or cut?~~ — **RESOLVED: KEEP the marquee (owner loves it), words = the 6 services (§5.0)**.
+4. ~~Typography (script vs Helvetica)~~ — **RESOLVED: Helvetica only, weights vary**.
+5. **Full-bleed imagery selection (open):** which repo brand images to use for the full-bleed sections (candidates in §5.0) — I'll propose a shortlist with the plan.
+6. **Confirmed out of scope** (owner brief, separate future work): logo asset, faceless hero photo, real Pinterest/Behance/TikTok URLs, Blog page (Substack), links-aggregator page.
