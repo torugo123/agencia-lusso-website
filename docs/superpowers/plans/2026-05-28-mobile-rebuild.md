@@ -959,7 +959,7 @@ function initCards() {
     const cat = card.dataset.cat || '';
     card.setAttribute('role', 'button');
     card.setAttribute('tabindex', '0');
-    card.setAttribute('aria-label', `ver galeria ${name}`);
+    card.setAttribute('aria-label', `ver galeria ${name} — ${cat}`);
     const open = () => openGallery(slug, name, cat);
     card.addEventListener('click', open);
     card.addEventListener('keydown', (e) => {
@@ -984,7 +984,7 @@ function openGallery(slug, name, cat) {
        <button class="m-gallery-close" aria-label="fechar galeria">&times;</button>
      </div>
      <div class="m-gallery-grid">
-       ${imgs.map((f) => `<img src="/images/portfolio/${slug}/${f}" alt="${name}" loading="lazy">`).join('')}
+       ${imgs.map((f, i) => `<img src="/images/portfolio/${slug}/${f}" alt="${name} — ${i + 1} de ${imgs.length}" loading="lazy">`).join('')}
      </div>`;
   document.body.appendChild(overlay);
   document.documentElement.style.overflow = 'hidden';
