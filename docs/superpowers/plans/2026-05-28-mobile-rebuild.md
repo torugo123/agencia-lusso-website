@@ -809,7 +809,7 @@ Append to `public/mobile/mobile.css`:
 .about-hero{ padding:calc(var(--hdr-h) + 40px) var(--pad) 16px }
 .about-hero h1{ font-size:40px }
 .m-founder{ margin:8px 0 } .m-founder img{ width:100%; height:64vh; object-fit:cover }
-.about-hero + .info-rows-section{ padding-top:24px }
+.m-founder + .info-rows-section{ padding-top:24px } /* figure is injected between hero and story */
 .about-cta{ background:var(--wine); padding:56px var(--pad); text-align:center }
 .about-cta h2{ color:var(--white-soft); font-size:28px }
 .about-cta .btn-light{ display:inline-flex; align-items:center; min-height:48px; padding:0 22px; margin-top:22px;
