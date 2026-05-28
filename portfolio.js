@@ -49,21 +49,18 @@ function initReveal() {
   });
 }
 
-// COLUMN PARALLAX — alternating cards drift at slightly different speeds (desktop only)
+// IMAGE PARALLAX — each image drifts vertically inside its frame as the card
+// travels through the viewport (Squarespace "parallax" effect, itsdoestudio-style).
+// Image is 120% tall (CSS); drifting yPercent 0 → -16.6 sweeps the full overhang.
 function initParallax() {
   if (reduceMotion || window.innerWidth < 768) return;
-  document.querySelectorAll('.pf-grid').forEach((grid) => {
-    const cards = [...grid.querySelectorAll('.pf-card')];
-    cards.forEach((card, i) => {
-      const colCount = grid.classList.contains('pf-grid-4') ? 4 : 3;
-      const col = i % colCount;
-      const speed = [-30, 40, -20, 50][col] || 0;
-      gsap.to(card, {
-        y: speed,
-        ease: 'none',
-        scrollTrigger: { trigger: grid, start: 'top bottom', end: 'bottom top', scrub: true },
-      });
-    });
+  document.querySelectorAll('.pf-card-img img').forEach((img) => {
+    const card = img.closest('.pf-card');
+    gsap.fromTo(img,
+      { yPercent: 0 },
+      { yPercent: -16.6, ease: 'none',
+        scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true } }
+    );
   });
 }
 
