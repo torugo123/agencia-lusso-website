@@ -1500,6 +1500,93 @@ section {
 /* ============================================
    PORTFOLIO PAGE
    ============================================ */
+.portfolio-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 52;
+  padding: 0 40px;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  mix-blend-mode: difference;
+  background: transparent;
+}
+
+.portfolio-header .logo {
+  font-family: 'Helvetica', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.portfolio-header nav {
+  display: flex;
+  gap: 24px;
+}
+
+.portfolio-header nav a {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.portfolio-header nav a:hover {
+  opacity: 0.6;
+}
+
+.portfolio-header .hamburger {
+  display: none;
+}
+
+.portfolio-footer {
+  width: 100%;
+  padding: 32px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.portfolio-footer .copyright {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--color-text);
+  opacity: 0.5;
+}
+
+.portfolio-footer .footer-links {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.portfolio-footer .footer-links a {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.portfolio-footer .footer-links a:hover {
+  color: var(--color-dark);
+}
+
 .portfolio-page { background: var(--color-bg); padding-top: 120px; }
 
 .pf-intro { padding: 0 0 48px; }
