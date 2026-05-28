@@ -53,3 +53,52 @@ h1{ font-size:40px } h2{ font-size:30px } h3{ font-size:20px } h4{ font-size:24p
 @media (prefers-reduced-motion:reduce){
   *{ animation:none !important; transition:none !important }
 }
+
+/* ==================== CHROME ==================== */
+/* Header (both .header and .portfolio-header) */
+.header,.portfolio-header{
+  position:fixed; top:0; left:0; width:100%; height:var(--hdr-h); z-index:9000;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 var(--pad); background:transparent; transition:background .3s var(--ease),transform .3s var(--ease);
+}
+.header.m-scrolled,.portfolio-header.m-scrolled{ background:rgba(229,227,214,.95); backdrop-filter:blur(10px) }
+.header.m-hidden,.portfolio-header.m-hidden{ transform:translateY(-100%) }
+.header-logo span,.portfolio-header .logo{ font-size:18px; font-weight:700; letter-spacing:.25em; color:var(--text) }
+/* hide desktop-only header bits on mobile */
+.header-nav,.header-contact,.portfolio-header nav{ display:none }
+.header-actions .btn{ display:inline-flex; align-items:center; min-height:40px; padding:0 14px;
+  background:var(--wine); color:var(--bg); border-radius:5px; font-size:14px }
+
+/* Hamburger */
+.hamburger{ display:flex; flex-direction:column; justify-content:center; gap:5px; width:40px; height:40px; z-index:9100 }
+.hamburger span{ display:block; width:22px; height:1.5px; background:var(--text); transition:transform .3s var(--ease),opacity .3s var(--ease) }
+.hamburger.active span:nth-child(1){ transform:translateY(6.5px) rotate(45deg) }
+.hamburger.active span:nth-child(2){ opacity:0 }
+.hamburger.active span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg) }
+.hamburger.active span{ background:var(--bg) }
+
+/* Mobile menu — maroon surface */
+.mobile-menu{
+  position:fixed; inset:0; z-index:9050; background:var(--wine);
+  display:flex; flex-direction:column; justify-content:center; align-items:center; gap:28px;
+  padding:var(--hdr-h) var(--pad) 40px;
+  opacity:0; pointer-events:none; transition:opacity .35s var(--ease);
+}
+.mobile-menu.active{ opacity:1; pointer-events:auto }
+.mobile-menu a{ font-size:32px; color:var(--bg); opacity:.92 }
+.mobile-menu a:active{ opacity:.6 }
+.mobile-menu .m-menu-cta{ margin-top:8px; background:var(--bg); color:var(--wine); min-height:48px;
+  display:inline-flex; align-items:center; padding:0 24px; border-radius:5px; font-size:16px }
+.mobile-menu .m-menu-ig{ font-size:14px; letter-spacing:.12em; text-transform:uppercase; opacity:.8 }
+.mobile-menu .m-menu-close{ position:absolute; top:14px; right:16px; width:44px; height:44px;
+  display:flex; align-items:center; justify-content:center; color:var(--bg); font-size:30px; line-height:1 }
+
+/* WhatsApp FAB */
+.whatsapp-fab{ position:fixed; right:16px; bottom:16px; width:52px; height:52px; z-index:9999;
+  background:#25d366; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  box-shadow:0 6px 18px rgba(0,0,0,.25); opacity:0; pointer-events:none; transition:opacity .4s var(--ease) }
+.whatsapp-fab.visible{ opacity:1; pointer-events:auto }
+.whatsapp-fab svg{ width:28px; height:28px; fill:#fff }
+
+/* Loader: not used on mobile — hide it outright */
+.loader{ display:none !important }
