@@ -381,8 +381,12 @@ function initFab() {
 Replace `mobile/home.js` contents:
 ```js
 import { initChrome } from './chrome.js';
-document.addEventListener('DOMContentLoaded', () => { initChrome(); });
+
+function start() { initChrome(); }
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+else start();
 ```
+> Why the readyState guard: each mobile entry is loaded via a dynamic `import()` that can resolve AFTER `DOMContentLoaded` has already fired — a bare `addEventListener('DOMContentLoaded', …)` would then never run. This pattern runs immediately if the DOM is already parsed.
 
 - [ ] **Step 4: Verify chrome (Playwright MCP)**
 
@@ -683,7 +687,7 @@ import { initChrome } from './chrome.js';
 import { initReveals, initStagger } from './reveal.js';
 import { initAccordion } from './accordion.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+function start() {
   initChrome();
 
   // Services → accordion (info-rows on home).
@@ -713,7 +717,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Reveals + staggers.
   initReveals('.reveal');
   initStagger('.hero-cards', '.hero-card');
-});
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+else start();
 ```
 
 - [ ] **Step 3: Verify home (Playwright MCP)**
@@ -804,7 +810,7 @@ import { initChrome } from './chrome.js';
 import { initReveals } from './reveal.js';
 import { initAccordion } from './accordion.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+function start() {
   initChrome();
 
   // Founder portrait (full-bleed) right after the hero.
@@ -821,7 +827,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (story) initAccordion(story, { item: '.info-row', trigger: '.info-row-title', panel: '.info-row-text' });
 
   initReveals('.reveal');
-});
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+else start();
 ```
 
 - [ ] **Step 5: Verify sobre (Playwright MCP)**
@@ -922,11 +930,13 @@ import { initChrome } from './chrome.js';
 import { initReveals } from './reveal.js';
 import { galleryImages } from '../portfolio-data.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+function start() {
   initChrome();
   initCards();
   initReveals('.reveal');
-});
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+else start();
 
 function initCards() {
   document.querySelectorAll('.pf-card').forEach((card) => {
@@ -1085,13 +1095,15 @@ import { initChrome } from './chrome.js';
 import { initReveals } from './reveal.js';
 import { initAccordion } from './accordion.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+function start() {
   initChrome();
   enhanceForm();
   const faq = document.querySelector('.s-accordion');
   if (faq) initAccordion(faq, { item: '.faq-item', trigger: '.faq-question', panel: '.faq-answer' });
   initReveals('.reveal');
-});
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+else start();
 
 const LABELS = {
   'tipo-servico': 'serviço', nome: 'nome', sobrenome: 'sobrenome',
