@@ -11,6 +11,8 @@ export function initReveals(selector = '.reveal, [data-reveal]') {
   // normalize to the element so this works across motion versions.
   inView(selector, (info) => {
     const el = info && info.target ? info.target : info;
+    if (el.dataset.revealed) return; // once per element — avoids re-enter flash
+    el.dataset.revealed = '1';
     animate(el,
       { opacity: [0, 1], transform: ['translateY(24px)', 'translateY(0)'] },
       { duration: 0.6, ease: [0.22, 0.61, 0.36, 1] }
@@ -28,6 +30,8 @@ export function initStagger(container, childSelector) {
   if (reduce) { children.forEach(clearInit); return; }
   children.forEach((c) => c.classList.add('m-reveal-init'));
   inView(root, () => {
+    if (root.dataset.staggered) return; // once per container
+    root.dataset.staggered = '1';
     animate(children,
       { opacity: [0, 1], transform: ['translateY(24px)', 'translateY(0)'] },
       { duration: 0.6, delay: stagger(0.08), ease: [0.22, 0.61, 0.36, 1] }
