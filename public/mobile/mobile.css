@@ -115,3 +115,78 @@ h1{ font-size:40px } h2{ font-size:30px } h3{ font-size:20px } h4{ font-size:24p
 .m-acc-trigger[aria-expanded="true"] .m-acc-sign::after{ transform:translate(-50%,-50%) rotate(0) }
 .m-acc-panel{ overflow:hidden; height:0 }
 .m-acc-panel-inner{ padding:0 0 20px; font-size:15px; line-height:1.65; color:#3a3a37 }
+
+/* ==================== HOME ==================== */
+.hero{ padding:calc(var(--hdr-h) + 28px) 0 8px }
+.hero .container{ display:flex; flex-direction:column; padding:0 var(--pad) }
+.hero h1{ font-size:44px; line-height:1.05 }
+.hero-body{ margin-top:18px; font-size:16px; color:#3a3a37 }
+.hero-cards{ display:flex; flex-direction:column; gap:12px; margin-top:24px }
+.hero-card{ background:rgba(255,255,255,.45); border:1px solid rgba(255,255,255,.6);
+  border-radius:14px; padding:18px 16px; backdrop-filter:blur(8px) }
+.hero-card h3{ font-size:18px } .hero-card-divider{ height:1px; background:rgba(81,3,1,.15); margin:10px 0 }
+.hero-card-link{ font-size:14px; color:var(--wine) }
+.hero-image{ margin-top:24px } .hero-image img{ width:100%; border-radius:14px; max-height:60vh; object-fit:cover }
+
+/* Marquee (kept — owner brief). Clean CSS scroll, no edge clipping. */
+.marquee-section{ background:var(--beige); padding:18px 0; overflow:hidden }
+.marquee-row{ overflow:hidden; white-space:nowrap }
+.marquee-row + .marquee-row{ margin-top:6px }
+.marquee-track{ display:inline-block; white-space:nowrap; will-change:transform; animation:m-scroll 22s linear infinite }
+.marquee-row.reverse .marquee-track{ animation-direction:reverse }
+.marquee-item{ font-size:18px; color:var(--text); margin:0 14px }
+.marquee-dot{ display:inline-block; width:4px; height:4px; border-radius:50%; background:var(--wine); vertical-align:middle }
+@keyframes m-scroll{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* CTA band */
+.cta-band{ padding:48px 0 }
+.cta-band .container{ padding:0 var(--pad); text-align:center }
+.cta-band p{ font-size:16px; color:#3a3a37 }
+.cta-band .btn-group{ display:flex; flex-direction:column; gap:12px; margin-top:22px }
+.cta-band .btn{ display:inline-flex; align-items:center; justify-content:center; min-height:48px; border-radius:5px; font-size:16px }
+.cta-band .btn-primary{ background:var(--wine); color:var(--bg) }
+.cta-band .btn-outline{ border:1px solid var(--text); color:var(--text) }
+
+/* About/mission */
+.info{ padding:56px 0 } .info .container{ padding:0 var(--pad) }
+.info-left h2{ font-size:30px } .info-left p{ margin-top:16px; font-size:16px; color:#3a3a37 }
+.info-left .btn{ display:inline-flex; align-items:center; min-height:48px; padding:0 22px; margin-top:20px;
+  background:var(--wine); color:var(--bg); border-radius:5px }
+.info-card{ margin-top:28px; background:var(--green); border-radius:14px; padding:22px 18px }
+.info-card h3{ font-size:18px; color:var(--wine) } .info-card p{ margin-top:8px; font-size:15px }
+
+/* Services accordion section */
+.info-rows-section{ padding:56px 0 } .info-rows-section .container{ padding:0 var(--pad) }
+.info-rows-section .m-section-label{ margin-bottom:8px }
+
+/* Injected full-bleed image section */
+.m-bleed-figure{ position:relative; margin:8px 0 }
+.m-bleed-figure img{ width:100%; height:62vh; object-fit:cover }
+.m-bleed-figure .m-bleed-label{ position:absolute; left:var(--pad); bottom:18px; color:var(--white-soft);
+  font-size:12px; letter-spacing:.18em; text-transform:uppercase; text-shadow:0 1px 6px rgba(0,0,0,.4) }
+
+/* CTA dark — the big statement moment */
+.cta-dark{ background:var(--wine); padding:64px 0 } .cta-dark .container{ padding:0 var(--pad) }
+.cta-dark-label{ display:block; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:rgba(254,254,254,.7) }
+.cta-dark h2{ margin-top:14px; font-size:34px; line-height:1.12; color:var(--white-soft) }
+.cta-dark .btn-light{ display:inline-flex; align-items:center; min-height:48px; padding:0 22px; margin-top:28px;
+  background:var(--bg); color:var(--text); border-radius:5px }
+.cta-dark-image{ display:none } /* keep hidden on mobile */
+.cta-dark-marquee{ margin-top:34px; overflow:hidden }
+.cta-dark-marquee .marquee-item{ color:var(--white-soft); font-size:16px }
+
+/* Pre-footer */
+.pre-footer{ background:var(--beige); padding:56px 0 40px } .pre-footer .container{ padding:0 var(--pad); text-align:center }
+.pre-footer h4{ font-size:24px } .pre-footer p{ margin-top:10px }
+.scroll-top{ display:inline-flex; align-items:center; justify-content:center; width:48px; height:48px; margin-top:22px;
+  border:1px solid var(--text); border-radius:50%; color:var(--text) }
+
+/* Footer (.footer) */
+.footer{ background:var(--beige); padding:32px var(--pad) calc(32px + env(safe-area-inset-bottom)) }
+.footer .container{ display:flex; flex-direction:column; gap:20px; text-align:center; align-items:center }
+.footer-left{ display:flex; flex-direction:column; gap:14px; align-items:center }
+.footer-logo{ font-size:22px; font-weight:700; letter-spacing:.25em }
+.footer-copy{ font-size:13px; color:var(--muted) }
+.footer-socials{ display:flex; gap:18px } .footer-socials a{ width:44px; height:44px; display:flex; align-items:center; justify-content:center; color:var(--wine) }
+.footer-socials svg{ width:20px; height:20px }
+.footer-right{ display:flex; flex-wrap:wrap; gap:14px; justify-content:center; font-size:13px }
