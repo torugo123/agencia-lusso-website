@@ -14,8 +14,10 @@
   <!-- Preload critical images -->
   <link rel="preload" href="/images/hero.webp" as="image" />
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="/style.css" />
+  <!-- Styles: desktop scoped ≥769px (unchanged content), mobile from-scratch ≤768px -->
+  <link rel="stylesheet" href="/style.css" media="(min-width:769px)" />
+  <link rel="stylesheet" href="/mobile/mobile.css" media="(max-width:768px)" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 </head>
 <body>
 
@@ -334,7 +336,13 @@
     </svg>
   </a>
 
-  <!-- Scripts -->
-  <script type="module" src="/main.js"></script>
+  <!-- Scripts: pick the bundle once at load -->
+  <script type="module">
+    if (window.matchMedia('(max-width:768px)').matches) {
+      import('/mobile/home.js');
+    } else {
+      import('/main.js');
+    }
+  </script>
 </body>
 </html>
