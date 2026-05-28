@@ -1,249 +1,113 @@
 /* ============================================
-   AGÊNCIA LUSSO — Portfolio Page JavaScript
-   GSAP entry animations + hover interactions
+   AGÊNCIA LUSSO — Portfolio JavaScript
+   Lenis + GSAP ScrollTrigger: reveal, column parallax, click overlay.
    ============================================ */
 
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { galleryImages } from './portfolio-data.js';
 
-// ============================================
-// LENIS SMOOTH SCROLL
-// ============================================
-const lenis = new Lenis({
-  lerp: 0.1,
-  duration: 1.2,
-  orientation: 'vertical',
-  smoothWheel: true,
-});
+gsap.registerPlugin(ScrollTrigger);
 
-gsap.ticker.add((time) => {
-  lenis.raf(time * 1000);
-});
+const lenis = new Lenis({ lerp: 0.1, duration: 1.2, orientation: 'vertical', smoothWheel: true });
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time) => lenis.raf(time * 1000));
 gsap.ticker.lagSmoothing(0);
 
-// ============================================
-// HAMBURGER MENU
-// ============================================
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// HAMBURGER
 function initHamburger() {
   const hamburger = document.querySelector('.hamburger');
   const mobileMenu = document.querySelector('.mobile-menu');
-  const menuLinks = mobileMenu?.querySelectorAll('a');
-
   if (!hamburger || !mobileMenu) return;
-
+  const links = mobileMenu.querySelectorAll('a');
   hamburger.addEventListener('click', () => {
-    const isActive = hamburger.classList.toggle('active');
+    const active = hamburger.classList.toggle('active');
     mobileMenu.classList.toggle('active');
-    hamburger.setAttribute('aria-expanded', isActive);
-
-    if (isActive) {
-      lenis.stop();
-    } else {
-      lenis.start();
-    }
+    hamburger.setAttribute('aria-expanded', active);
+    active ? lenis.stop() : lenis.start();
   });
+  links.forEach((l) => l.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('active');
+    hamburger.setAttribute('aria-expanded', 'false');
+    lenis.start();
+  }));
+}
 
-  menuLinks?.forEach((link) => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('active');
-      mobileMenu.classList.remove('active');
-      hamburger.setAttribute('aria-expanded', 'false');
-      lenis.start();
-    });
+// REVEAL on scroll
+function initReveal() {
+  document.querySelectorAll('.reveal').forEach((el) => {
+    gsap.fromTo(el,
+      { opacity: 0, y: 60 },
+      { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true } }
+    );
   });
 }
 
-// ============================================
-// PROJECT HOVER INTERACTION
-// ============================================
-function initProjectHover() {
-  const projectItems = document.querySelectorAll('.project-item');
-  const images = document.querySelectorAll('.portfolio-image');
-
-  if (!projectItems.length || !images.length) return;
-
-  projectItems.forEach((item) => {
-    item.addEventListener('mouseenter', () => {
-      const index = parseInt(item.dataset.index, 10);
-
-      // Remove active from all items
-      projectItems.forEach((p) => p.classList.remove('active'));
-
-      // Handle image transition
-      images.forEach((img) => {
-        if (img.classList.contains('active')) {
-          img.classList.remove('active');
-          img.classList.add('previous');
-          setTimeout(() => img.classList.remove('previous'), 600);
-        }
+// COLUMN PARALLAX — alternating cards drift at slightly different speeds (desktop only)
+function initParallax() {
+  if (reduceMotion || window.innerWidth < 768) return;
+  document.querySelectorAll('.pf-grid').forEach((grid) => {
+    const cards = [...grid.querySelectorAll('.pf-card')];
+    cards.forEach((card, i) => {
+      const colCount = grid.classList.contains('pf-grid-4') ? 4 : 3;
+      const col = i % colCount;
+      const speed = [-30, 40, -20, 50][col] || 0;
+      gsap.to(card, {
+        y: speed,
+        ease: 'none',
+        scrollTrigger: { trigger: grid, start: 'top bottom', end: 'bottom top', scrub: true },
       });
-
-      // Activate hovered
-      item.classList.add('active');
-      if (images[index]) {
-        images[index].classList.add('active');
-      }
     });
   });
 }
 
-// ============================================
-// PROJECT GALLERY DATA
-// ============================================
-const galleryImages = {
-  'purpose': ['42.webp', '56.webp', '64.webp', '77.webp', '83.webp', '87.webp', 'dia-do-consumidor.webp'],
-  'halo-beauty': ['1.webp', '2.webp', '3.webp', '4.webp', '5.webp', '6.webp', '7.webp', '8.webp', '9.webp', '10.webp', '11.webp', '12.webp', '13.webp', '14.webp'],
-  'acervo-moda': ['1.webp', '2.webp', '3.webp', '4.webp', '5.webp', '6.webp', '7.webp', '8.webp', '9.webp', '10.webp', '11.webp'],
-  'cym': ['1.webp', '2.webp', '3.webp', '4.webp', '5.webp', '6.webp', '8.webp', '9.webp', '10.webp'],
-  'cy': ['38.webp', '39.webp', '53.webp', '58.webp', '82.webp', '100.webp', '104.webp', '111.webp'],
-  'himawari': ['1.webp', '2.webp', '3.webp', '4.webp', '5.webp', '6.webp', '7.webp', '8.webp', '9.webp'],
-  'lu-godoy': ['1.webp', '2.webp', '3.webp', '4.webp', '5.webp', '6.webp', '7.webp', '8.webp', '9.webp', '10.webp', '11.webp', '12.webp'],
-};
-
-// ============================================
-// PROJECT GALLERY (click to open)
-// ============================================
-function initProjectGallery() {
-  const projectItems = document.querySelectorAll('.project-item');
-  const centerImages = document.querySelectorAll('.portfolio-image');
-  const gridCards = document.querySelectorAll('.portfolio-grid-card');
-
-  function openGallery(slug, projectName) {
+// ENHANCED OVERLAY — header (name + category) + image grid
+function initGallery() {
+  function openGallery(slug, name, cat) {
     const images = galleryImages[slug];
     if (!images || !images.length) return;
-
     const overlay = document.createElement('div');
     overlay.className = 'gallery-overlay';
     overlay.innerHTML = `
       <div class="gallery-header">
-        <span class="gallery-title">${projectName}</span>
-        <button class="gallery-close">&times;</button>
+        <div class="gallery-header-meta">
+          <span class="g-name">${name}</span>
+          <span class="g-cat">${cat}</span>
+        </div>
+        <button class="gallery-close" aria-label="Fechar">&times;</button>
       </div>
       <div class="gallery-grid">
-        ${images.map((img) => `<img src="/images/portfolio/${slug}/${img}" alt="${projectName}" loading="lazy" />`).join('')}
-      </div>
-    `;
+        ${images.map((img) => `<img src="/images/portfolio/${slug}/${img}" alt="${name}" loading="lazy" />`).join('')}
+      </div>`;
     document.body.appendChild(overlay);
     lenis.stop();
-
     requestAnimationFrame(() => overlay.classList.add('active'));
-
-    overlay.querySelector('.gallery-close').addEventListener('click', closeGallery);
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) closeGallery();
-    });
-
-    function closeGallery() {
-      overlay.classList.remove('active');
-      lenis.start();
-      setTimeout(() => overlay.remove(), 300);
-    }
+    const close = () => { overlay.classList.remove('active'); lenis.start(); setTimeout(() => overlay.remove(), 300); };
+    overlay.querySelector('.gallery-close').addEventListener('click', close);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function esc(e){ if(e.key==='Escape'){ close(); document.removeEventListener('keydown', esc);} });
   }
 
-  // Click on project item name
-  projectItems.forEach((item) => {
-    item.addEventListener('click', () => {
-      const slug = item.dataset.slug;
-      const name = item.querySelector('.project-name')?.textContent || slug;
-      openGallery(slug, name);
-    });
-  });
-
-  // Click on center image
-  centerImages.forEach((img) => {
-    img.style.cursor = 'pointer';
-    img.addEventListener('click', () => {
-      const src = img.getAttribute('src') || '';
-      const slug = Object.keys(galleryImages).find((s) => src.includes(s));
-      if (slug) openGallery(slug, slug);
-    });
-  });
-
-  // Click on grid card
-  gridCards.forEach((card) => {
-    card.style.cursor = 'pointer';
+  document.querySelectorAll('.pf-card').forEach((card) => {
     card.addEventListener('click', () => {
-      const imgSrc = card.querySelector('img')?.getAttribute('src') || '';
-      const name = card.querySelector('.card-name')?.textContent || '';
-      const slug = Object.keys(galleryImages).find((s) => imgSrc.includes(s));
-      if (slug) openGallery(slug, name);
+      openGallery(card.dataset.slug, card.dataset.name || card.dataset.slug, card.dataset.cat || '');
     });
   });
 }
 
-// ============================================
-// VIEW TOGGLE (LIST / GRID)
-// ============================================
-function initViewToggle() {
-  const toggles = document.querySelectorAll('.view-toggle span');
-  const portfolioPage = document.querySelector('.portfolio-page');
-
-  if (!toggles.length || !portfolioPage) return;
-
-  toggles.forEach((toggle) => {
-    toggle.addEventListener('click', () => {
-      toggles.forEach((t) => t.classList.remove('active'));
-      toggle.classList.add('active');
-
-      if (toggle.dataset.view === 'grid') {
-        portfolioPage.classList.add('view-grid');
-      } else {
-        portfolioPage.classList.remove('view-grid');
-      }
-    });
-  });
-}
-
-// ============================================
-// GSAP ENTRY ANIMATIONS
-// ============================================
-function initEntryAnimations() {
-  // Header + footer fade in (clearProps so CSS takes over after)
-  gsap.from('.portfolio-header, .portfolio-footer', {
-    opacity: 0,
-    duration: 0.5,
-    delay: 0.2,
-    clearProps: 'all',
-  });
-
-  // Project items stagger (clearProps so CSS hover rules work after)
-  gsap.from('.project-item', {
-    opacity: 0,
-    y: 30,
-    duration: 0.6,
-    stagger: 0.08,
-    ease: 'power3.out',
-    delay: 0.3,
-    clearProps: 'all',
-  });
-
-  // View toggle
-  gsap.from('.view-toggle', {
-    opacity: 0,
-    duration: 0.5,
-    delay: 0.4,
-    clearProps: 'all',
-  });
-}
-
-// ============================================
-// REDUCED MOTION CHECK
-// ============================================
-function prefersReducedMotion() {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-}
-
-// ============================================
-// INIT
-// ============================================
 document.addEventListener('DOMContentLoaded', () => {
   initHamburger();
-  initProjectHover();
-  initProjectGallery();
-  initViewToggle();
-
-  if (!prefersReducedMotion()) {
-    initEntryAnimations();
+  initGallery();
+  if (reduceMotion) {
+    document.querySelectorAll('.reveal').forEach((el) => { el.style.opacity = '1'; el.style.transform = 'none'; });
+  } else {
+    initReveal();
+    initParallax();
   }
 });
