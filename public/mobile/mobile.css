@@ -102,3 +102,16 @@ h1{ font-size:40px } h2{ font-size:30px } h3{ font-size:20px } h4{ font-size:24p
 
 /* Loader: not used on mobile — hide it outright */
 .loader{ display:none !important }
+
+/* ==================== ACCORDION ==================== */
+.m-acc-item{ border-bottom:1px solid rgba(81,3,1,.18) }
+.m-acc-trigger{ width:100%; display:flex; align-items:center; justify-content:space-between; gap:16px;
+  text-align:left; padding:18px 0; font-size:18px; color:var(--text) }
+.m-acc-trigger[aria-expanded="true"]{ color:var(--wine) }
+.m-acc-sign{ flex:none; width:18px; height:18px; position:relative }
+.m-acc-sign::before,.m-acc-sign::after{ content:''; position:absolute; top:50%; left:50%;
+  width:14px; height:1.5px; background:currentColor; transform:translate(-50%,-50%); transition:transform .3s var(--ease) }
+.m-acc-sign::after{ transform:translate(-50%,-50%) rotate(90deg) }
+.m-acc-trigger[aria-expanded="true"] .m-acc-sign::after{ transform:translate(-50%,-50%) rotate(0) }
+.m-acc-panel{ overflow:hidden; height:0 }
+.m-acc-panel-inner{ padding:0 0 20px; font-size:15px; line-height:1.65; color:#3a3a37 }
