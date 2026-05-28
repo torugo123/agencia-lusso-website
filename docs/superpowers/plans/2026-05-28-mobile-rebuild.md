@@ -1109,6 +1109,13 @@ import { initChrome } from './chrome.js';
 import { initReveals } from './reveal.js';
 import { initAccordion } from './accordion.js';
 
+// Declared before the readyState guard at the bottom — start() reads it, so it must
+// be initialized first (avoids a temporal-dead-zone ReferenceError on immediate start()).
+const LABELS = {
+  'tipo-servico': 'serviço', nome: 'nome', sobrenome: 'sobrenome',
+  email: 'email', telefone: 'telefone', mensagem: 'mensagem',
+};
+
 function start() {
   initChrome();
   enhanceForm();
@@ -1116,13 +1123,6 @@ function start() {
   if (faq) initAccordion(faq, { item: '.faq-item', trigger: '.faq-question', panel: '.faq-answer' });
   initReveals('.reveal');
 }
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
-else start();
-
-const LABELS = {
-  'tipo-servico': 'serviço', nome: 'nome', sobrenome: 'sobrenome',
-  email: 'email', telefone: 'telefone', mensagem: 'mensagem',
-};
 
 function enhanceForm() {
   const form = document.querySelector('.contact-form');
@@ -1168,6 +1168,9 @@ function validate(form) {
   });
   return ok;
 }
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+else start();
 ```
 
 > Note: the existing form wraps controls in `.form-row` divs. The code above replaces each control with its `.m-field` wrapper *inside* the same `.form-row`, so a `.form-row` ends up holding one or two `.m-field`s (e.g. nome + sobrenome). The `.contact-form .form-row` rule (Step 3) gives those fields column spacing.
