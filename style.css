@@ -807,8 +807,8 @@ section {
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 320px;
-  opacity: 0.35;
+  width: 384px;
+  opacity: 0.42;
   filter: grayscale(100%);
   z-index: 1;
   pointer-events: none;
