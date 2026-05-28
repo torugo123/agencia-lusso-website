@@ -1149,8 +1149,10 @@ function enhanceForm() {
     const success = document.createElement('div');
     success.className = 'm-form-success';
     success.setAttribute('role', 'status');
+    success.setAttribute('tabindex', '-1');
     success.textContent = 'mensagem enviada — em breve a equipe da lusso entra em contato';
     form.replaceWith(success);
+    success.focus();
   });
 }
 
