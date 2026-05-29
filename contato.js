@@ -233,7 +233,8 @@ function prefersReducedMotion() {
 // ============================================
 // INIT
 // ============================================
-document.addEventListener('DOMContentLoaded', () => {
+const __onReady = (fn) => (document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', fn) : fn());
+__onReady(() => {
   initHeader();
   initHamburger();
   initContactFAQ();

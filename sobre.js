@@ -123,7 +123,8 @@ function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+const __onReady = (fn) => (document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', fn) : fn());
+__onReady(() => {
   initHeader();
   initHamburger();
 

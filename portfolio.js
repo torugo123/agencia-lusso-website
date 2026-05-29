@@ -98,7 +98,8 @@ function initGallery() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+const __onReady = (fn) => (document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', fn) : fn());
+__onReady(() => {
   initHamburger();
   initGallery();
   if (reduceMotion) {
