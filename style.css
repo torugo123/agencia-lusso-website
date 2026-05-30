@@ -776,11 +776,11 @@ section {
 }
 
 .info-row-text {
-  font-size: 22px;
-  font-weight: 300;
-  line-height: 31px;
-  color: var(--color-text);
-  max-width: 550px;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  max-width: 480px;
 }
 
 /* ============================================
