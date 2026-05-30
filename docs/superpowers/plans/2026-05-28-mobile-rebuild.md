@@ -1264,3 +1264,10 @@ git -c user.name="torugo123" -c user.email="keynona123@gmail.com" commit -m "fix
 - Portfolio cards keyboard-openable; gallery overlay is an accessible dialog.
 - Contato form: labels, validation, success placeholder (no backend).
 - `npm run build` + `npm run preview` clean; zero console errors across pages.
+
+---
+
+## Execution Deviations (recorded during implementation)
+1. **Desktop `readyState` guard (user-approved).** Loading desktop JS via dynamic `import()` can resolve after `DOMContentLoaded` has fired, leaving `main.js`/`portfolio.js`/`sobre.js`/`contato.js` init (loader, Lenis, animations) never running — a desktop regression caught in Task 10. Fix: a 2-line `readyState` guard (`const __onReady = (fn) => (document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', fn) : fn()); __onReady(() => { …existing body… });`) added to each of the 4 desktop entry files. Behavior preserved. This is the one deviation from the strict "desktop files untouched" rule; the user chose it over the synthetic-event alternative. Commit `2fb786c`.
+2. **Mobile entries use the same `readyState` guard** (not bare `DOMContentLoaded`) for the same reason.
+3. Small fixes during review: reveal once-per-element guard; accordion heading-preservation + no-rAF collapse; sobre padding selector targets the injected figure; contato `LABELS` declared before the init guard (TDZ); contato success message receives focus; portfolio a11y labels.
