@@ -188,11 +188,49 @@ function initSplitText() {
 }
 
 // ============================================
+// SERVICES LIST — Option 3: line draw + word stagger + column parallax
+// ============================================
+function initServicesReveal() {
+  const rows = document.querySelectorAll('.info-rows-section .info-row');
+
+  rows.forEach((row) => {
+    const title = row.querySelector('.info-row-title');
+    const text = row.querySelector('.info-row-text');
+    const left = row.querySelector('.info-row-left');
+
+    // Split title into words, masked by their line wrapper (overflow hidden in CSS)
+    const split = new SplitType(title, { types: 'lines, words' });
+
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: row, start: 'top 84%', once: true },
+    });
+    tl.from(row, { '--line-scale': 0, duration: 0.9, ease: 'power3.out' })
+      .from(split.words, { yPercent: 115, duration: 0.6, stagger: 0.05, ease: 'power3.out' }, '-=0.55')
+      .from(text, { autoAlpha: 0, y: 18, duration: 0.6, ease: 'power2.out' }, '-=0.4');
+
+    // Subtle parallax: title and description columns drift at different rates
+    gsap.to(left, {
+      yPercent: -12,
+      ease: 'none',
+      scrollTrigger: { trigger: row, start: 'top bottom', end: 'bottom top', scrub: true },
+    });
+    gsap.to(text, {
+      yPercent: 8,
+      ease: 'none',
+      scrollTrigger: { trigger: row, start: 'top bottom', end: 'bottom top', scrub: true },
+    });
+  });
+}
+
+// ============================================
 // SCROLL-TRIGGERED ANIMATIONS
 // ============================================
 function initScrollAnimations() {
   // Split text (headings) — line-by-line reveal, each heading on its own entry
   initSplitText();
+
+  // Services list — bespoke Option 3 reveal (replaces the generic .reveal batch here)
+  initServicesReveal();
 
   // Unified reveal: ONE mechanism for every .reveal element. ScrollTrigger.batch
   // groups elements that enter together and staggers them, each triggered by ITS
